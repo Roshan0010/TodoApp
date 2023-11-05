@@ -6,10 +6,16 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "start": "react-native start",
     "test": "jest"
+    
+  },
+  "eslintConfig": {
+    "extends": ["wesbos"]
   },
   "dependencies": {
+    "eslint-config-wesbos": "^3.2.3",
     "native-base": "^3.4.28",
     "react": "18.2.0",
     "react-native": "0.72.6",
@@ -35,4 +41,5 @@
   "engines": {
     "node": ">=16"
   }
+  
 }
