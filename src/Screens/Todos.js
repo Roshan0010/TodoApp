@@ -7,17 +7,6 @@ import React, { useState } from 'react';
 import { IconButton } from 'react-native-paper';
 
 
-const dummyData=[{
-    id:"1",
-    title:"kapra dhona",
-},
-{
-    id:"2",
-    title:"bartan dhona"
-
-},]
-
-
 const screenWidth = Dimensions.get('window').width;
 
 
@@ -31,13 +20,12 @@ const Todos = () => {
     function handleAddTodo(){
       setTodoList([...todoList, { id: Date.now().toString(), title: todo }]);
       setTodo(''); // Clear the input field
-    //  console.log("you are in handle todo");
+
     }
 
     function HandleDeleteTodo(id){
       const updateTodoList=todoList.filter((todo)=>todo.id!==id);
       setTodoList(updateTodoList);
-      // console.log('here')
     }
 
 
@@ -47,29 +35,7 @@ const Todos = () => {
 
  
       return(
-          <View style={{flex:1,width:screenWidth,padding:15,}}>
-              <View style={{backgroundColor:'#36454F',flexDirection:'row',height:40,borderRadius:10}}>
-              <Text style={{flex:1,fontSize:20,padding:5,paddingEnd:20}}>{item.title}</Text>
-              <View style={{flexDirection:'row'}} >
-              <TouchableOpacity style={styles.removeButton}>
-              <Text style={{ textAlign: 'center', fontSize: 20, color: '#84563c' }}>&lt;-</Text>
-  
-              
-                </TouchableOpacity>
-    
-               
-                <TouchableOpacity style={styles.removeButton}
-                 onPress={() => HandleDeleteTodo(item.id)}
-                >
-                  
-                <Text style={{textAlign:'center',fontSize:20,color:'#84563c'} }>-</Text>
-                </TouchableOpacity>
-              </View>
-              
-              
-          </View>
-          </View>
-          
+        <TodoList item={item} todoList={todoList} setTodoList={setTodoList}/>
       
           
       )
@@ -79,7 +45,7 @@ const Todos = () => {
 
     
   return (
-    <View style={{gap:15,flex:1, alignItems:'center',backgroundColor:'#1FFFFFF',position:'absolute'}}>
+    <View style={{gap:15,flex:1, alignItems:'center',backgroundColor:'#1FFFFFF',position:'absolute', padding:10}}>
     <View >
       <Text style={[isDarkMode?styles.whiteText:styles.darkText,{fontSize:25,textAlign:'center',height:30}]}>ToDo List</Text>
 
