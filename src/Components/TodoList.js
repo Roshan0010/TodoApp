@@ -6,9 +6,10 @@ import {
     Dimensions,
     TouchableOpacity,
     StyleSheet,
+    useColorScheme,
 } from 'react-native';
-
 import React from 'react';
+import * as SC from '../Screens/Todos/styles';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -17,16 +18,10 @@ const TodoList = ({ item, todoList, setTodoList }) => {
         const updatedTodoList = todoList.filter((item) => item.id !== id);
         setTodoList(updatedTodoList);
     }
+    const isDarkMode = useColorScheme() === 'dark';
     return (
         <View style={{ flex: 1, width: screenWidth, padding: 15 }}>
-            <View
-                style={{
-                    backgroundColor: '#36454F',
-                    flexDirection: 'row',
-                    height: 40,
-                    borderRadius: 10,
-                }}
-            >
+            <SC.TodosView isDarkMode={isDarkMode}>
                 <Text
                     style={{
                         flex: 1,
@@ -66,7 +61,7 @@ const TodoList = ({ item, todoList, setTodoList }) => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </SC.TodosView>
         </View>
     );
 };
