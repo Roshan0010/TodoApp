@@ -5,7 +5,11 @@ import { NativeBaseProvider } from 'native-base';
 
 const App = () => {
   return (
-    <Todos/>  
+   <SafeAreaView>
+     <Todos/>  
+   </SafeAreaView>
+   
+    
   )
 }
 
