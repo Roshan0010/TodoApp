@@ -40,11 +40,17 @@ export const AddText = styled(Text)`
     font-size: 30px;
     color: white;
 `;
-
 export const TodosView = styled(View)`
     background-color: ${(props) => (props.isDarkMode ? '#36454f' : '#E7E7E6')};
-
     flex-direction: row;
     height: 40px;
     border-radius: 10px;
+`;
+
+export const TodosText = styled(Text)`
+    flex: 1;
+    color: ${(props) => (props.isDarkMode ? 'white' : 'black')};
+    font-size: 20px;
+    padding: 5px;
+    padding-end: 20px;
 `;

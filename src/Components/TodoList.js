@@ -22,16 +22,9 @@ const TodoList = ({ item, todoList, setTodoList }) => {
     return (
         <View style={{ flex: 1, width: screenWidth, padding: 15 }}>
             <SC.TodosView isDarkMode={isDarkMode}>
-                <Text
-                    style={{
-                        flex: 1,
-                        fontSize: 20,
-                        padding: 5,
-                        paddingEnd: 20,
-                    }}
-                >
+                <SC.TodosText isDarkMode={isDarkMode}>
                     {item.title}
-                </Text>
+                </SC.TodosText>
 
                 <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity style={styles.removeButton}>
