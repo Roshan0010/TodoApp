@@ -10,13 +10,16 @@ import {
 } from 'react-native';
 import React from 'react';
 import * as SC from '../Screens/Todos/styles';
+import { setData } from '../../utils/storage';
+import { STORAGE_KEY } from '../../utils/strings';
 
 const screenWidth = Dimensions.get('window').width;
 
-const TodoList = ({ item, todoList, setTodoList }) => {
+const TodoList = ({ item, todoList, setTodoList, handleEdit }) => {
     function handleDeleteTodo(id) {
         const updatedTodoList = todoList.filter((item) => item.id !== id);
         setTodoList(updatedTodoList);
+        setData(STORAGE_KEY, updatedTodoList);
     }
     const isDarkMode = useColorScheme() === 'dark';
     return (
@@ -27,7 +30,10 @@ const TodoList = ({ item, todoList, setTodoList }) => {
                 </SC.TodosText>
 
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity style={styles.removeButton}>
+                    <TouchableOpacity
+                        style={styles.removeButton}
+                        onPress={() => handleEdit(item.id)}
+                    >
                         <Text
                             style={{
                                 textAlign: 'center',

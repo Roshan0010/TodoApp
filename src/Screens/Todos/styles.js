@@ -8,11 +8,11 @@ export const ParentWrapper = styled(View)`
     background-color: ${(props) =>
         props.isDarkMode ? 'darkcolor' : 'lightcolor'};
     position: absolute;
-    padding-top: 30px;
+    padding-top: 50px;
 `;
 export const Input = styled(TextInput)`
     border-radius: 10px;
-    height: 40px;
+    height: 50px;
     width: ${(props) => props.width};
     color: ${(props) => (props.isDarkMode ? 'white' : 'black')};
     background: ${(props) => (props.isDarkMode ? '#444443' : '#E5E4E2')};
@@ -22,6 +22,7 @@ export const Input = styled(TextInput)`
     padding-left: 5px;
     padding-right: 5px;
     margin: 5px;
+    font-size: 25px;
 `;
 
 export const AddButton = styled(TouchableOpacity)`
