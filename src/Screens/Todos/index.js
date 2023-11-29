@@ -1,20 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-shadow */
 /* eslint-disable react/jsx-no-undef */
-import {
-    View,
-    Text,
-    StyleSheet,
-    useColorScheme,
-    TextInput,
-    TouchableOpacity,
-    Dimensions,
-    FlatList,
-    SafeAreaView,
-    KeyboardAvoidingView,
-} from 'react-native';
-import React, { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, useColorScheme, Dimensions, FlatList, Text } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Modal, ModalContent } from 'react-native-modals';
 import { readData, setData } from '../../../utils/storage';
 import { STORAGE_KEY } from '../../../utils/strings';
 import TodoList from '../../Components/TodoList';
@@ -27,13 +16,42 @@ const Todos = () => {
     const [todo, setTodo] = useState('');
     const [todoList, setTodoList] = useState([]);
     const [selectedTodoId, setSelectedTodoId] = useState(null);
+    const inputRef = useRef(null);
+    const [todoModal, setTodoModal] = useState(false);
 
     useEffect(() => {
         readData(STORAGE_KEY, setTodoList);
     }, []); // Add an empty dependency array to trigger only once on mount
 
-    // ... existing code ...
-
+    // eslint-disable-next-line react/no-unstable-nested-components
+    const ViewModal = () => {
+        console.log('here');
+        return (
+            <Modal
+                animationType="slide"
+                transparent
+                visible={todoModal}
+                onRequestClose={() => {
+                    setTodoModal(false); // Close the modal when the close action is triggered
+                }}
+            >
+                {/* Add your modal content here */}
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'white',
+                        height: 50,
+                        zIndex: 100,
+                    }}
+                >
+                    <Text>Modal Content</Text>
+                    {/* Add more components or text here */}
+                </View>
+            </Modal>
+        );
+    };
     function handleAddTodo() {
         if (selectedTodoId) {
             const updatedTodoList = todoList.map((item) => {
@@ -61,6 +79,9 @@ const Todos = () => {
         const selectedTodo = todoList.find((item) => item.id === id);
         if (selectedTodo) {
             setTodo(selectedTodo.title);
+            if (inputRef.current) {
+                inputRef.current.focus();
+            }
         }
     }
 
@@ -70,6 +91,8 @@ const Todos = () => {
             todoList={todoList}
             setTodoList={setTodoList}
             handleEdit={handleEdit}
+            setTodoModal={setTodoModal}
+            todoModal={todoModal}
         />
     );
 
@@ -80,6 +103,7 @@ const Todos = () => {
         >
             <View style={{ flex: 3 }}>
                 <SC.Input
+                    ref={inputRef}
                     style={{ width: screenWidth - 10 }}
                     isDarkMode={isDarkMode}
                     value={todo}
@@ -96,6 +120,7 @@ const Todos = () => {
                     <SC.AddText>+</SC.AddText>
                 </SC.AddButton>
             </View>
+            {todoModal && <ViewModal />}
         </SC.ParentWrapper>
     );
 };
