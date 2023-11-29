@@ -5,9 +5,8 @@ import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 export const ParentWrapper = styled(View)`
     flex: 1;
     align-items: center;
-    background-color: ${(props) =>
-        props.isDarkMode ? 'darkcolor' : 'lightcolor'};
     position: absolute;
+    z-index: 1;
     padding-top: 50px;
 `;
 export const Input = styled(TextInput)`

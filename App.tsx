@@ -5,10 +5,10 @@ import { ModalPortal } from 'react-native-modals';
 
 const App = () => {
   return (
-   <SafeAreaView>
-     <ModalPortal />
+   <>
+    <ModalPortal />
      <Todos/>  
-   </SafeAreaView>
+   </>
    
     
   )

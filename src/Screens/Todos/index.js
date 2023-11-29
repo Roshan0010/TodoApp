@@ -1,9 +1,18 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-shadow */
 /* eslint-disable react/jsx-no-undef */
-import { View, useColorScheme, Dimensions, FlatList, Text } from 'react-native';
+import {
+    View,
+    useColorScheme,
+    Dimensions,
+    FlatList,
+    Text,
+    TouchableOpacity,
+} from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal, ModalContent } from 'react-native-modals';
+import { Modal } from 'react-native-modals';
 import { readData, setData } from '../../../utils/storage';
 import { STORAGE_KEY } from '../../../utils/strings';
 import TodoList from '../../Components/TodoList';
@@ -18,6 +27,7 @@ const Todos = () => {
     const [selectedTodoId, setSelectedTodoId] = useState(null);
     const inputRef = useRef(null);
     const [todoModal, setTodoModal] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState(null);
 
     useEffect(() => {
         readData(STORAGE_KEY, setTodoList);
@@ -26,27 +36,38 @@ const Todos = () => {
     // eslint-disable-next-line react/no-unstable-nested-components
     const ViewModal = () => {
         console.log('here');
+        console.log(todoModal);
+        const temp = todoList.find((item) => item.id === selectedItemId);
+        console.log(temp);
         return (
             <Modal
                 animationType="slide"
                 transparent
                 visible={todoModal}
+                height={screenHeight / 4}
+                width={screenWidth / 1.5}
                 onRequestClose={() => {
-                    setTodoModal(false); // Close the modal when the close action is triggered
+                    setTodoModal(false);
+                    setSelectedItemId(null);
                 }}
+                supportedOrientations={['portrait', 'landscape']}
             >
-                {/* Add your modal content here */}
                 <View
                     style={{
-                        flex: 1,
-                        justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor: 'white',
-                        height: 50,
-                        zIndex: 100,
+                        backgroundColor: 'grey',
+                        zIndex: 200,
                     }}
                 >
-                    <Text>Modal Content</Text>
+                    <Text>{temp.title}</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setTodoModal(false);
+                            setSelectedItemId(null);
+                        }}
+                    >
+                        <Text>X</Text>
+                    </TouchableOpacity>
                     {/* Add more components or text here */}
                 </View>
             </Modal>
@@ -93,35 +114,41 @@ const Todos = () => {
             handleEdit={handleEdit}
             setTodoModal={setTodoModal}
             todoModal={todoModal}
+            setSelectedItemId={setSelectedItemId}
         />
     );
 
     return (
-        <SC.ParentWrapper
-            isDarkMode={isDarkMode}
-            style={{ height: screenHeight }}
-        >
-            <View style={{ flex: 3 }}>
-                <SC.Input
-                    ref={inputRef}
-                    style={{ width: screenWidth - 10 }}
+        <>
+            {todoModal ? (
+                <ViewModal />
+            ) : (
+                <SC.ParentWrapper
                     isDarkMode={isDarkMode}
-                    value={todo}
-                    onChangeText={(text) => setTodo(text)}
-                />
-            </View>
+                    style={{ height: screenHeight }}
+                >
+                    <View style={{ flex: 3 }}>
+                        <SC.Input
+                            ref={inputRef}
+                            style={{ width: screenWidth - 10 }}
+                            isDarkMode={isDarkMode}
+                            value={todo}
+                            onChangeText={(text) => setTodo(text)}
+                        />
+                    </View>
 
-            <View style={{ flex: 20 }}>
-                <FlatList data={todoList} renderItem={renderTodos} />
-            </View>
+                    <View style={{ flex: 20 }}>
+                        <FlatList data={todoList} renderItem={renderTodos} />
+                    </View>
 
-            <View style={{ flex: 3 }}>
-                <SC.AddButton onPress={() => handleAddTodo()}>
-                    <SC.AddText>+</SC.AddText>
-                </SC.AddButton>
-            </View>
-            {todoModal && <ViewModal />}
-        </SC.ParentWrapper>
+                    <View style={{ flex: 3 }}>
+                        <SC.AddButton onPress={() => handleAddTodo()}>
+                            <SC.AddText>+</SC.AddText>
+                        </SC.AddButton>
+                    </View>
+                </SC.ParentWrapper>
+            )}
+        </>
     );
 };
 

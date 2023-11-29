@@ -8,8 +8,7 @@ import {
     StyleSheet,
     useColorScheme,
 } from 'react-native';
-import React, { useState } from 'react';
-import { Modal, ModalContent } from 'react-native-modals';
+
 import * as SC from '../Screens/Todos/styles';
 import { setData } from '../../utils/storage';
 import { STORAGE_KEY } from '../../utils/strings';
@@ -23,6 +22,7 @@ const TodoList = ({
     handleEdit,
     setTodoModal,
     todoModal,
+    setSelectedItemId,
 }) => {
     function handleDeleteTodo(id) {
         const updatedTodoList = todoList.filter((item) => item.id !== id);
@@ -31,13 +31,14 @@ const TodoList = ({
     }
     const isDarkMode = useColorScheme() === 'dark';
 
-    // eslint-disable-next-line react/no-unstable-nested-components
-
     return (
         <View style={{ flex: 1, width: screenWidth, padding: 15 }}>
             <SC.TodosView
                 isDarkMode={isDarkMode}
-                onPress={() => setTodoModal(!todoModal)}
+                onPress={() => {
+                    setTodoModal(!todoModal); // Toggle the modal state
+                    setSelectedItemId(item.id); // Set the selected item ID separately
+                }}
             >
                 <SC.TodosText isDarkMode={isDarkMode}>
                     {item.title}
