@@ -54,20 +54,48 @@ const Todos = () => {
             >
                 <View
                     style={{
-                        alignItems: 'center',
-                        backgroundColor: 'grey',
-                        zIndex: 200,
+                        backgroundColor: '#2a363e',
                     }}
                 >
-                    <Text>{temp.title}</Text>
                     <TouchableOpacity
                         onPress={() => {
                             setTodoModal(false);
                             setSelectedItemId(null);
                         }}
+                        style={{
+                            // Style for the 'X' button container
+                            width: 40,
+                            height: 40,
+                            borderRadius: 20,
+                            backgroundColor: '#36454f', // Change color as needed
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
                     >
-                        <Text>X</Text>
+                        <Text
+                            style={{
+                                // Style for the 'X' text
+                                fontSize: 24,
+                                fontWeight: 'bold',
+                                color: 'white', // Change color as needed
+                            }}
+                        >
+                            X
+                        </Text>
                     </TouchableOpacity>
+                </View>
+                <View
+                    style={{
+                        alignItems: 'center',
+                        backgroundColor: '#2a363e',
+                        flex: 4,
+                        paddingTop: 30,
+                    }}
+                >
+                    <Text style={{ fontSize: 16 }}>
+                        {temp ? temp.title : `my bad`}
+                    </Text>
+
                     {/* Add more components or text here */}
                 </View>
             </Modal>

@@ -30,6 +30,13 @@ const TodoList = ({
         setData(STORAGE_KEY, updatedTodoList);
     }
     const isDarkMode = useColorScheme() === 'dark';
+    let trimmedTitle;
+    if (item.title.length > 30) {
+        trimmedTitle = item.title.substring(0, 30);
+        trimmedTitle += '...';
+    } else {
+        trimmedTitle = item.title;
+    }
 
     return (
         <View style={{ flex: 1, width: screenWidth, padding: 15 }}>
@@ -41,7 +48,7 @@ const TodoList = ({
                 }}
             >
                 <SC.TodosText isDarkMode={isDarkMode}>
-                    {item.title}
+                    {trimmedTitle}
                 </SC.TodosText>
 
                 <View style={{ flexDirection: 'row' }}>
@@ -91,14 +98,6 @@ const styles = StyleSheet.create({
         color: '#000000',
     },
 
-    todoinputDark: {
-        backgroundColor: '#E5E4E2',
-        color: '#848884',
-    },
-    todoInputLight: {
-        backgroundColor: '#D3D3D3',
-        color: '#000000',
-    },
     TouchableOpacity: {
         height: 60,
         width: 60,
